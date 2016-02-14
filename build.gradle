@@ -1,0 +1,18 @@
+group 'praveer09.experiments'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'io.reactivex:rxjava:1.1.1'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.assertj:assertj-core:3.3.0'
+}
