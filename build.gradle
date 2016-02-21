@@ -13,6 +13,8 @@ repositories {
 
 dependencies {
     compile 'io.reactivex:rxjava:1.1.1'
+    compile 'ch.qos.logback:logback-classic:1.1.3'
+
     testCompile 'junit:junit:4.12'
     testCompile 'org.assertj:assertj-core:3.3.0'
 }
