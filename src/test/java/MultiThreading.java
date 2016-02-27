@@ -73,7 +73,7 @@ public class MultiThreading {
 
     private Func1<Integer, String> numberToString() {
         return number -> {
-            System.out.println("Operator thread:" + Thread.currentThread().getName());
+            System.out.println("Operator thread: " + Thread.currentThread().getName());
             return String.valueOf(number);
         };
     }
