@@ -1,6 +1,7 @@
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import rx.Observable;
 import rx.observables.ConnectableObservable;
 import rx.observers.TestSubscriber;
 
@@ -71,5 +72,23 @@ public class MultiCastingUsingConnectableObservables {
 
         assertThat(subscriber1.getOnNextEvents().get(0))
                 .isNotEqualTo(subscriber2.getOnNextEvents().get(0));
+    }
+
+    @Test
+    public void autoConnectsToSourceAfterASpecifiedNumberOfConnections() throws Exception {
+        TestSubscriber<Instant> subscriber1 = TestSubscriber.create();
+        TestSubscriber<Instant> subscriber2 = TestSubscriber.create();
+        Observable<Instant> observable = defer(() -> just(Instant.now()))
+                .doOnNext(i -> logger.info(i.toString()))
+                .publish().autoConnect(2);
+        observable.subscribe(subscriber1);
+        observable.subscribe(subscriber2);
+
+        subscriber1.assertValueCount(1);
+        subscriber1.assertCompleted();
+        subscriber2.assertValueCount(1);
+        subscriber2.assertCompleted();
+        assertThat(subscriber1.getOnNextEvents().get(0))
+                .isEqualTo(subscriber2.getOnNextEvents().get(0));
     }
 }
